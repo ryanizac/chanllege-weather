@@ -3,8 +3,6 @@
     "name": "chanllege-weather",
     "slug": "chanllege-weather",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   }
 }
