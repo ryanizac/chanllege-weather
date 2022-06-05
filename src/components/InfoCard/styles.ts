@@ -46,6 +46,12 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: '500',
     color: colors.orange
+  },
+  favoriteContainer: {
+    height: 40,
+    width: 40,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end'
   }
 });
 

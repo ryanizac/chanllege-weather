@@ -9,6 +9,20 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 24,
     fontWeight: '700'
+  },
+  textInfo: {
+    color: '#2b2a2b',
+    marginTop: 40,
+    textAlign: 'center',
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 28
+  },
+  subTextInfo: {
+    fontSize: 18,
+    paddingHorizontal: 12,
+    textAlign: 'center',
+    color: '#666666'
   }
 });
 

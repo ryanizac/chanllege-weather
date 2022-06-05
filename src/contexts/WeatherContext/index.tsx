@@ -25,7 +25,6 @@ export function WeatherContextProvider(props: WeatherContextProviderProps) {
   const [weather, setWeather] = useState<Weather[]>([]);
 
   function add(weather: Weather) {
-    console.log('weather', weather);
     setWeather((prevState) => [...prevState, weather]);
   }
 
