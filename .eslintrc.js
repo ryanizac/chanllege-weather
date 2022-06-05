@@ -34,7 +34,9 @@ const config = {
     sourceType: 'module'
   },
   plugins: ['react', '@typescript-eslint'],
-  rules: {}
+  rules: {
+    'no-empty-interface': false
+  }
 };
 
 module.exports = config;
