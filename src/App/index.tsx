@@ -1,11 +1,12 @@
+import ListCity from '@/components/pages/ListCity';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import styles from './style';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <ListCity />
       <StatusBar style="auto" />
     </View>
   );
