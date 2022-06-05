@@ -2,7 +2,6 @@ import ListCity from '@/components/pages/ListCity';
 import Search from '@/components/pages/Search';
 import { Route, Router } from '@/lib/Router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
 import { View } from 'react-native';
 import styles from './style';
 
