@@ -1,6 +1,5 @@
 import ListCity from '@/components/pages/ListCity';
 import Search from '@/components/pages/Search';
-import useStorage from '@/hooks/useStorage';
 import { Route, Router } from '@/lib/Router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
