@@ -6,4 +6,5 @@ export default interface Weather {
   climate: string;
   min: number;
   max: number;
+  isFavorite?: boolean;
 }
