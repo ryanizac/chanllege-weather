@@ -5,10 +5,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%'
   },
-  titleHeader: {
+  inputHeader: {
+    flex: 1,
+    marginLeft: 20,
+    height: '100%',
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
     color: 'white',
-    fontSize: 24,
-    fontWeight: '700'
+    fontSize: 24
   }
 });
 
