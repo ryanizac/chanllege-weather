@@ -1,9 +1,9 @@
 import styles from './styles';
 import { FullHeart, HeartSvg } from '@/icons';
 import { Pressable, Text, View } from 'react-native';
-import Weather from '@/@types/Weather';
+import IWeatherForecast from '@/types/IWeatherForecast';
 
-interface InfoCardProps extends Weather {
+interface InfoCardProps extends IWeatherForecast {
   onFavorite?: () => void;
 }
 

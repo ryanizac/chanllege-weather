@@ -1,16 +1,16 @@
-import City from '@/@types/City';
-import Weather from '@/@types/Weather';
+import ICity from '@/types/ICity';
+import IWeatherForecast from '@/types/IWeatherForecast';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 interface WeatherContextProps {
-  weather: Weather[];
-  add: (weather: Weather) => void;
-  remove: (cityRef: Weather) => void;
-  toggleFavorite: (city: City) => void;
+  weather: IWeatherForecast[];
+  add: (weather: IWeatherForecast) => void;
+  remove: (cityRef: IWeatherForecast) => void;
+  toggleFavorite: (city: ICity) => void;
 }
 
 export const WeatherContext = createContext<WeatherContextProps>({
-  weather: [{ city: { name: '', country: '' }, temp: 0, climate: '', max: 0, min: 0 }],
+  weather: [{ city: { id: '', name: '', country: '' }, temp: 0, climate: '', max: 0, min: 0 }],
   add: () => {},
   remove: () => {},
   toggleFavorite: () => {}
@@ -21,14 +21,14 @@ interface WeatherContextProviderProps {
 }
 
 export function WeatherContextProvider(props: WeatherContextProviderProps) {
-  //   const storage = useStorage<Weather>('weatherList', { name: '' });
-  const [weather, setWeather] = useState<Weather[]>([]);
+  //   const storage = useStorage<IWeatherForecast>('weatherList', { name: '' });
+  const [weather, setWeather] = useState<IWeatherForecast[]>([]);
 
-  function add(weather: Weather) {
+  function add(weather: IWeatherForecast) {
     setWeather((prevState) => [...prevState, weather]);
   }
 
-  function remove(weather: Weather) {
+  function remove(weather: IWeatherForecast) {
     setWeather((prevState) => prevState.filter((item) => item.city.name !== weather.city.name));
   }
 
@@ -42,12 +42,12 @@ export function WeatherContextProvider(props: WeatherContextProviderProps) {
   //   });
   // }
 
-  function toggleFavorite(city: City) {
+  function toggleFavorite(city: ICity) {
     setWeather((prevState) => {
       const weatherFound = prevState.find((item) => item.city.name === city.name);
       if (weatherFound !== undefined) {
         const newState = prevState.filter((item) => item.city.name !== city.name);
-        const newWeather: Weather = {
+        const newWeather: IWeatherForecast = {
           ...weatherFound,
           isFavorite: !weatherFound.isFavorite
         };

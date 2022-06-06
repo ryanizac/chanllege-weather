@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import { Keyboard, ScrollView, Text, TextInput, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useRouter } from '@/lib/Router';
-import City from '@/@types/City';
+import ICity from '@/types/ICity';
 import CityService from '@/services/CityService';
 import { useWeather } from '@/contexts/WeatherContext';
 import WeatherService from '@/services/WeatherService';
@@ -16,9 +16,9 @@ export default function Search(props: SearchProps) {
   const router = useRouter();
   const [typing, setTyping] = useState(true);
   const [search, setSearch] = useState('');
-  const [listCity, setListCity] = useState<City[]>([]);
+  const [listCity, setListCity] = useState<ICity[]>([]);
 
-  function handleItem(city: City) {
+  function handleItem(city: ICity) {
     WeatherService.findByCityName(city.name).then((value) => {
       if (!!value?.length) {
         add(value[0]);
