@@ -1,8 +1,8 @@
 import styles from './styles';
 import { Pressable, Text, View } from 'react-native';
-import ICity from '@/types/ICity';
+import ICityBase from '@/types/ICityBase';
 
-interface CardProps extends ICity {
+interface CardProps extends ICityBase {
   onPress?: () => void;
 }
 

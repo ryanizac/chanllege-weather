@@ -1,23 +1,40 @@
-import ICity from '@/types/ICity';
+import ICityBaseAPIRes from '@/types/responses/ICityBaseAPIRes';
+import ICityCoordAPIRes from '@/types/responses/ICityCoordAPIRes';
+import GenericService from './GenericService';
 
-const allCityTest: ICity[] = [
-  { id: '1', name: 'pau dos ferros', country: 'BR' },
-  { id: '2', name: 'joão câmara', country: 'BR' },
-  { id: '3', name: 'natal', country: 'BR' },
-  { id: '4', name: 'martins', country: 'BR' },
-  { id: '5', name: 'são paulo', country: 'SP' }
-];
-
-export default class CityService {
-  static async getAll(): Promise<ICity[]> {
-    return allCityTest;
+export default class CityService extends GenericService {
+  static async searchCity(text: string): Promise<ICityBaseAPIRes['predictions'] | undefined> {
+    const baseRoute = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?';
+    const baseParams = {
+      input: encodeURIComponent(text),
+      types: '(cities)',
+      language: 'pt',
+      key: 'AIzaSyCUD9M7N3SvDci5gAwoapGigKI1n9eGIic'
+    };
+    const route = this.mountRoute(baseRoute, baseParams);
+    try {
+      const req = await fetch(route);
+      const res = (await req.json()) as ICityBaseAPIRes;
+      return res.predictions;
+    } catch (error: any) {
+      return undefined;
+    }
   }
 
-  static async findByName(value: string): Promise<ICity[] | undefined> {
-    return allCityTest.filter((city) => {
-      const cityName = city.name.toLocaleLowerCase();
-      const findCity = value.toLocaleLowerCase();
-      return cityName.includes(findCity);
-    });
+  static async findCoord(id: string): Promise<ICityCoordAPIRes['result'] | undefined> {
+    const baseRoute = 'https://maps.googleapis.com/maps/api/place/details/json?';
+    const baseParams = {
+      place_id: id,
+      fields: ['name', 'geometry'].join(','),
+      key: 'AIzaSyCUD9M7N3SvDci5gAwoapGigKI1n9eGIic'
+    };
+    const route = this.mountRoute(baseRoute, baseParams);
+    try {
+      const req = await fetch(route);
+      const res = (await req.json()) as ICityCoordAPIRes;
+      return res.result;
+    } catch (error: any) {
+      return undefined;
+    }
   }
 }

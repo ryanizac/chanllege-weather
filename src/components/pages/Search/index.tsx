@@ -1,42 +1,27 @@
 import styles from './styles';
+import { Keyboard, ScrollView, Text, TextInput, View } from 'react-native';
 import SimpleCard from '@/components/CityCard';
 import Header from '@/components/Header';
-import { Keyboard, ScrollView, Text, TextInput, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useRouter } from '@/lib/Router';
-import ICity from '@/types/ICity';
-import CityService from '@/services/CityService';
-import { useWeather } from '@/contexts/WeatherContext';
-import WeatherService from '@/services/WeatherService';
+import { useCityContext } from '@/contexts/CityContext';
+import ICityBase from '@/types/ICityBase';
 
 interface SearchProps {}
 
 export default function Search(props: SearchProps) {
-  const { weather, add } = useWeather();
   const router = useRouter();
+  const { cities, add, search } = useCityContext();
+  const [input, setInput] = useState('');
   const [typing, setTyping] = useState(true);
-  const [search, setSearch] = useState('');
-  const [listCity, setListCity] = useState<ICity[]>([]);
-
-  function handleItem(city: ICity) {
-    WeatherService.findByCityName(city.name).then((value) => {
-      if (!!value?.length) {
-        add(value[0]);
-        // then
-        setListCity((prevState) => prevState.filter((item) => item.name !== value[0].city.name));
-      }
-    });
-  }
+  const [listCity, setListCity] = useState<ICityBase[]>([]);
 
   function onPressIconHeader() {
     //search
     if (typing) {
       setTyping(false);
       Keyboard.dismiss();
-      search.length >= 2 &&
-        CityService.findByName(search).then((listCityFound) => {
-          if (!!listCityFound) setListCity(listCityFound);
-        });
+      input.length >= 3 && search(input).then((value) => setListCity(value));
     } // back, when not typing and after pressing the button
     else router.setPath('/listcities');
   }
@@ -55,11 +40,11 @@ export default function Search(props: SearchProps) {
           placeholder="digite..."
           placeholderTextColor="rgba(255,255,255,0.6)"
           style={styles.inputHeader}
-          value={search}
+          value={input}
           autoFocus={typing}
           onPressIn={() => setListCity([])}
           onSubmitEditing={onPressIconHeader}
-          onChangeText={(e) => setSearch(e)}
+          onChangeText={(e) => setInput(e)}
           onFocus={() => setTyping(true)}
           onEndEditing={() => setTyping(false)}
         />
@@ -70,13 +55,13 @@ export default function Search(props: SearchProps) {
         {listCity.length > 0
           ? listCity
               .filter((item) => {
-                const exits = weather.find((itemCurrent) => {
-                  return itemCurrent.city.name === item.name;
+                const exits = cities.find((itemCurrent) => {
+                  return itemCurrent.name === item.name;
                 });
                 return !exits;
               })
               .map((item, index) => (
-                <SimpleCard key={`SimpleCard${index}`} {...item} onPress={() => handleItem(item)} />
+                <SimpleCard key={`SimpleCard${index}`} {...item} onPress={() => add(item)} />
               ))
           : !typing && (
               <>

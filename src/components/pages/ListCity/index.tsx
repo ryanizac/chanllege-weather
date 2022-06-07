@@ -3,13 +3,18 @@ import InfoCard from '@/components/InfoCard';
 import Header from '@/components/Header';
 import { ScrollView, Text, View } from 'react-native';
 import { useRouter } from '@/lib/Router';
-import { useWeather } from '@/contexts/WeatherContext';
+import { useCityContext } from '@/contexts/CityContext';
 
 interface ListCityProps {}
 
 export default function ListCity(props: ListCityProps) {
   const router = useRouter();
-  const { weather, toggleFavorite } = useWeather();
+  const { cities, toggleFavorite, chooseSelected } = useCityContext();
+
+  function onDetail(id: string) {
+    chooseSelected(id);
+    router.setPath('/detail');
+  }
 
   return (
     <View style={styles.container}>
@@ -17,10 +22,16 @@ export default function ListCity(props: ListCityProps) {
         <Text style={styles.titleHeader}>Cidades</Text>
       </Header>
       <ScrollView
-        style={{ height: '100%', width: '100%', padding: 20, backgroundColor: '#fafafa' }}
+        style={{
+          height: '100%',
+          width: '100%',
+          padding: 20,
+          backgroundColor: '#fafafa',
+          paddingBottom: 40
+        }}
       >
-        {weather.length > 0 ? (
-          weather
+        {cities.length > 0 ? (
+          cities
             .sort((a, b) => {
               if (a.isFavorite && !b.isFavorite) return -1;
               else if (!a.isFavorite && b.isFavorite) return 1;
@@ -30,7 +41,8 @@ export default function ListCity(props: ListCityProps) {
               <InfoCard
                 key={`InfoCard${index}`}
                 {...item}
-                onFavorite={() => toggleFavorite(item.city)}
+                onFavorite={() => toggleFavorite(item.id)}
+                onDetail={() => onDetail(item.id)}
               />
             ))
         ) : (
