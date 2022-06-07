@@ -1,4 +1,5 @@
 import ICityForecastAPIRes from '@/types/responses/ICityForecastAPIRes';
+import { OPEN_WEATHER_MAP_API } from '@env';
 import GenericService from './GenericService';
 
 export default class ForecastService extends GenericService {
@@ -10,7 +11,7 @@ export default class ForecastService extends GenericService {
       units: 'metric',
       exclude: ['hourly', 'minutely'].join(','),
       lang: 'pt',
-      appid: '328e35e2ddcc76e1dba9667241d2ae1d'
+      appid: OPEN_WEATHER_MAP_API
     };
     const route = this.mountRoute(baseRoute, baseParams);
     try {

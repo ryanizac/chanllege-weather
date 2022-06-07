@@ -1,5 +1,6 @@
 import ICityBaseAPIRes from '@/types/responses/ICityBaseAPIRes';
 import ICityCoordAPIRes from '@/types/responses/ICityCoordAPIRes';
+import { GOOGLE_PLACES_API } from '@env';
 import GenericService from './GenericService';
 
 export default class CityService extends GenericService {
@@ -9,7 +10,7 @@ export default class CityService extends GenericService {
       input: encodeURIComponent(text),
       types: '(cities)',
       language: 'pt',
-      key: 'AIzaSyCUD9M7N3SvDci5gAwoapGigKI1n9eGIic'
+      key: GOOGLE_PLACES_API
     };
     const route = this.mountRoute(baseRoute, baseParams);
     try {
@@ -26,7 +27,7 @@ export default class CityService extends GenericService {
     const baseParams = {
       place_id: id,
       fields: ['name', 'geometry'].join(','),
-      key: 'AIzaSyCUD9M7N3SvDci5gAwoapGigKI1n9eGIic'
+      key: GOOGLE_PLACES_API
     };
     const route = this.mountRoute(baseRoute, baseParams);
     try {
