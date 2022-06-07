@@ -113,19 +113,13 @@ export function CityContextProvider(props: CityContextProviderProps) {
       // update if has results
       if (hasNetwork) {
         const updatedCities = await asyncMap(result, async (itemCity, index) => {
-          console.log('asyncMap', itemCity.name, index);
           const updatedForecast = await findCityForecast(itemCity.lat, itemCity.lon);
           if (updatedForecast === undefined) return itemCity;
           const newCity = new CityModel(itemCity, itemCity, updatedForecast);
-          console.log('newCity', newCity);
           return newCity;
         });
-        console.log('updateStorage...');
         cityStorage.write(updatedCities).then((result) => {
-          if (result === true) {
-            console.log('update');
-            setCities(updatedCities);
-          }
+          if (result === true) setCities(updatedCities);
         });
         setLoadUpdatesOnStart(true);
       } else setCities(result);
@@ -134,19 +128,6 @@ export function CityContextProvider(props: CityContextProviderProps) {
 
   useEffect(() => {
     if (!loadUpdatesOnStart) syncCityStorage();
-    // (async () => {
-    //   ------------- test storage
-    //   console.log('reading async storage');
-    //   syncStorage();
-    //   console.log('reading async storage');
-    //   storage.read().then((value) => console.log(value));
-    //   console.log('veryfing keys on async storage');
-    //   await storage.hasSomething().then((value) => console.log(value));
-    //   console.log('clear async storage');
-    //   await AsyncStorageService.clear();
-    //   console.log('veryfing keys on async storage');
-    //   await storage.hasSomething().then((value) => console.log(value));
-    // })();
   }, [hasNetwork]);
 
   return (
