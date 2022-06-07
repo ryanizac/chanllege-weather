@@ -50,7 +50,7 @@ export default class CityModel<B extends ICityBase, C extends ICityCoord, F exte
   country: string;
   lat: number;
   lon: number;
-  isFavorite: boolean;
+  isFavorite: boolean = false;
   daily?: IForecast[] | undefined;
   description?: string;
   dt?: number;
@@ -58,18 +58,34 @@ export default class CityModel<B extends ICityBase, C extends ICityCoord, F exte
   min?: number;
   temp?: number;
 
-  constructor(base: B, coord: C, forecast: F | { [key: string]: any } = {}) {
+  constructor(base: B, coord: C, forecast: F | { [key: string]: any } = {}, prevCity?: ICity) {
+    if (prevCity) this.setPrevCity(prevCity);
+
     this.id = base.id;
     this.name = base.name;
     this.country = base.country;
     this.lat = coord.lat;
     this.lon = coord.lon;
-    this.isFavorite = false;
     this.daily = forecast.daily;
     this.description = forecast.description;
     this.dt = forecast.dt;
     this.max = forecast.max;
     this.min = forecast.min;
     this.temp = forecast.temp;
+  }
+
+  setPrevCity(prevCity: ICity) {
+    this.id = prevCity.id;
+    this.name = prevCity.name;
+    this.country = prevCity.country;
+    this.lat = prevCity.lat;
+    this.lon = prevCity.lon;
+    this.isFavorite = prevCity.isFavorite;
+    this.daily = prevCity.daily;
+    this.description = prevCity.description;
+    this.dt = prevCity.dt;
+    this.max = prevCity.max;
+    this.min = prevCity.min;
+    this.temp = prevCity.temp;
   }
 }
