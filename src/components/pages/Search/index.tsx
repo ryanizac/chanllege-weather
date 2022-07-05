@@ -16,6 +16,11 @@ export default function Search(props: SearchProps) {
   const [typing, setTyping] = useState(true);
   const [listCity, setListCity] = useState<ICityBase[]>([]);
 
+  async function onAdd(item: ICityBase) {
+    await add(item);
+    router.setPath('/listcities');
+  }
+
   function onPressIconHeader() {
     //search
     if (typing) {
@@ -61,7 +66,7 @@ export default function Search(props: SearchProps) {
                 return !exits;
               })
               .map((item, index) => (
-                <SimpleCard key={`SimpleCard${index}`} {...item} onPress={() => add(item)} />
+                <SimpleCard key={`SimpleCard${index}`} {...item} onPress={() => onAdd(item)} />
               ))
           : !typing && (
               <>
