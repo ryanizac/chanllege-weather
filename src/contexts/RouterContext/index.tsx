@@ -2,7 +2,6 @@ import {
   createContext,
   Dispatch,
   Fragment,
-  ReactFragment,
   ReactNode,
   SetStateAction,
   useContext,
@@ -13,7 +12,7 @@ import { createElement } from 'react-native';
 interface RouterContextProps {
   path: string;
   setPath: Dispatch<SetStateAction<string>>;
-  redirect: (path: string) => ReactFragment;
+  redirect: (path: string) => JSX.Element;
 }
 
 export const RouterContext = createContext<RouterContextProps>({
