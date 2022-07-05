@@ -115,7 +115,7 @@ export function CityContextProvider(props: CityContextProviderProps) {
         const updatedCities = await asyncMap(result, async (itemCity, index) => {
           const updatedForecast = await findCityForecast(itemCity.lat, itemCity.lon);
           if (updatedForecast === undefined) return itemCity;
-          const newCity = new CityModel(itemCity, itemCity, updatedForecast);
+          const newCity = new CityModel(itemCity, itemCity, updatedForecast, itemCity);
           return newCity;
         });
         cityStorage.write(updatedCities).then((result) => {
