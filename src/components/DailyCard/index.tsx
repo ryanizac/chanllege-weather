@@ -8,14 +8,18 @@ interface DailyCardProps extends IForecast {
   onDetail?: () => void;
 }
 
+const mappedDays: Record<number, string> = {
+  0: 'Hoje',
+  1: 'Amanhã'
+};
+
 export default function DailyCard(props: DailyCardProps) {
   const [date] = useState<Date>(new Date((props.dt || 0) * 1000));
 
   function getDayName() {
     const currentDate = new Date();
-    return currentDate.getDay() === date.getDay()
-      ? 'Hoje'
-      : date.toLocaleDateString('pt-br', { weekday: 'long' });
+    const day = (date.getDay() - currentDate.getDay()) as number;
+    return mappedDays[day] || date.toLocaleDateString('pt-br', { weekday: 'long' });
   }
 
   function getDayAndMonth() {
