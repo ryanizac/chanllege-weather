@@ -25,9 +25,10 @@ export default function ListCity(props: ListCityProps) {
         style={{
           height: '100%',
           width: '100%',
-          padding: 20,
-          backgroundColor: '#fafafa',
-          paddingBottom: 40
+          backgroundColor: '#fafafa'
+        }}
+        contentContainerStyle={{
+          padding: 20
         }}
       >
         {cities.length > 0 ? (

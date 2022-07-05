@@ -55,7 +55,8 @@ export default function Search(props: SearchProps) {
         />
       </Header>
       <ScrollView
-        style={{ height: '100%', width: '100%', padding: 20, backgroundColor: '#fafafa' }}
+        style={{ height: '100%', width: '100%', backgroundColor: '#fafafa' }}
+        contentContainerStyle={{ padding: 20 }}
       >
         {listCity.length > 0
           ? listCity

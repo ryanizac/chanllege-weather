@@ -21,7 +21,8 @@ export default function Detail(props: DetailProps) {
         <Text style={styles.titleHeader}>{selected.name}</Text>
       </Header>
       <ScrollView
-        style={{ height: '100%', width: '100%', padding: 20, backgroundColor: '#fafafa' }}
+        style={{ height: '100%', width: '100%', backgroundColor: '#fafafa' }}
+        contentContainerStyle={{ padding: 20 }}
       >
         {selected.daily &&
           selected.daily
