@@ -1,24 +1,13 @@
-import {
-  createContext,
-  Dispatch,
-  Fragment,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useState
-} from 'react';
-import { createElement } from 'react-native';
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react';
 
 interface RouterContextProps {
   path: string;
   setPath: Dispatch<SetStateAction<string>>;
-  redirect: (path: string) => JSX.Element;
 }
 
 export const RouterContext = createContext<RouterContextProps>({
   path: '',
-  setPath: () => {},
-  redirect: () => createElement(Fragment)
+  setPath: () => {}
 });
 
 interface RouterProps {
@@ -29,17 +18,11 @@ interface RouterProps {
 export function RouterProvider(props: RouterProps) {
   const [path, setPath] = useState(props.default);
 
-  function redirect(newPath: string) {
-    setPath(newPath);
-    return createElement(Fragment);
-  }
-
   return (
     <RouterContext.Provider
       value={{
         path,
-        setPath,
-        redirect
+        setPath
       }}
     >
       {props.children}

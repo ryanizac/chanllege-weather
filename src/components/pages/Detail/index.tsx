@@ -4,20 +4,21 @@ import { ScrollView, Text, View } from 'react-native';
 import { useRouter } from '@/lib/Router';
 import { useCityContext } from '@/contexts/CityContext';
 import DailyCard from '@/components/DailyCard';
+import ErrorComponent from '../Error';
 
 interface DetailProps {}
 
 export default function Detail(props: DetailProps) {
   const router = useRouter();
-  const { selected } = useCityContext();
+  const { selected, clearSelected } = useCityContext();
 
-  if (selected === undefined) {
-    return router.redirect('/listcities');
-  }
+  if (!selected) return <ErrorComponent code={404} message="no selected city" />;
+
+  const onBack = () => [router.setPath('/listcities'), clearSelected()];
 
   return (
     <View style={styles.container}>
-      <Header icon="BackSvg" onPress={() => router.setPath('/listcities')} invert>
+      <Header icon="BackSvg" onPress={onBack} invert>
         <Text style={styles.titleHeader}>{selected.name}</Text>
       </Header>
       <ScrollView
