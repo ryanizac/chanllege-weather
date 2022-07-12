@@ -17,13 +17,25 @@ export default function ListCity(props: ListCityProps) {
     router.setPath('/detail');
   }
 
+  const list = cities
+    .sort((a, b) => {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    })
+    .sort((a, b) => {
+      if (a.isFavorite && !b.isFavorite) return -1;
+      if (!a.isFavorite && b.isFavorite) return 1;
+      return 0;
+    });
+
   return (
     <View style={styles.container}>
       <Header icon="SearchSvg" onPress={() => router.setPath('/search')}>
         <Text style={styles.titleHeader}>Cidades</Text>
       </Header>
       <CardList
-        list={cities}
+        list={list}
         callback={(item, index) => (
           <InfoCard
             key={`InfoCard${index}`}
