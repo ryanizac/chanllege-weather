@@ -1,10 +1,11 @@
 import styles from './styles';
 import Header from '@/components/Header';
-import { ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useRouter } from '@/lib/Router';
 import { useCityContext } from '@/contexts/CityContext';
 import DailyCard from '@/components/DailyCard';
 import ErrorComponent from '../Error';
+import { CardList } from '@/components/ui/CardList';
 
 interface DetailProps {}
 
@@ -21,15 +22,10 @@ export default function Detail(props: DetailProps) {
       <Header icon="BackSvg" onPress={onBack} invert>
         <Text style={styles.titleHeader}>{selected.name}</Text>
       </Header>
-      <ScrollView
-        style={{ height: '100%', width: '100%', backgroundColor: '#fafafa' }}
-        contentContainerStyle={{ padding: 20 }}
-      >
-        {selected.daily &&
-          selected.daily
-            .slice(0, 7)
-            .map((item, index) => <DailyCard key={`Text${index}`} {...item} />)}
-      </ScrollView>
+      <CardList
+        list={(selected.daily || []).slice(0, 7)}
+        callback={(item, index) => <DailyCard key={`Text${index}`} {...item} />}
+      />
     </View>
   );
 }
