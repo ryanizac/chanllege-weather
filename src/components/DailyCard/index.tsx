@@ -2,24 +2,20 @@ import styles from './styles';
 import { Pressable, Text, View } from 'react-native';
 import { useState } from 'react';
 import IForecast from '@/types/IForecast';
+import { dayNames, isToday, isTomorrow, makeDate } from '@/utils/date';
 
 interface DailyCardProps extends IForecast {
   onFavorite?: () => void;
   onDetail?: () => void;
 }
 
-const mappedDays: Record<number, string> = {
-  0: 'Hoje',
-  1: 'Amanhã'
-};
-
 export default function DailyCard(props: DailyCardProps) {
-  const [date] = useState<Date>(new Date((props.dt || 0) * 1000));
+  const [date] = useState<Date>(makeDate(props.dt * 1000));
 
-  function getDayName() {
-    const currentDate = new Date();
-    const day = (date.getDay() - currentDate.getDay()) as number;
-    return mappedDays[day] || date.toLocaleDateString('pt-br', { weekday: 'long' });
+  function getDayName(): string {
+    if (isToday(date)) return 'Hoje';
+    if (isTomorrow(date)) return 'Amanhã';
+    return dayNames[date.getDay()];
   }
 
   function getDayAndMonth() {
