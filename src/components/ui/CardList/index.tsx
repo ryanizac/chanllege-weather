@@ -5,6 +5,7 @@ import styles from './styles';
 interface CardListProps<T extends object> {
   list: T[];
   callback: (item: T, index: number) => JSX.Element;
+  ifEmpty?: string[];
 }
 
 export function CardList<T extends object>(props: CardListProps<T>) {
@@ -12,7 +13,7 @@ export function CardList<T extends object>(props: CardListProps<T>) {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {listComponents.length ? listComponents : <NoItems />}
+      {listComponents.length ? listComponents : props.ifEmpty && <NoItems list={props.ifEmpty} />}
     </ScrollView>
   );
 }

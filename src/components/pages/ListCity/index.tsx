@@ -32,6 +32,10 @@ export default function ListCity(props: ListCityProps) {
             onDetail={() => onDetail(item.id)}
           />
         )}
+        ifEmpty={[
+          'Parece que você ainda não adicionou cidades',
+          'Tente adicionar uma cidade usando o botão de busca'
+        ]}
       />
     </View>
   );

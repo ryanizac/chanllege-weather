@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from '@/lib/Router';
 import { useCityContext } from '@/contexts/CityContext';
 import ICityBase from '@/types/ICityBase';
+import { CardList } from '@/components/ui/CardList';
 
 interface SearchProps {}
 
@@ -38,6 +39,13 @@ export default function Search(props: SearchProps) {
     };
   }, []);
 
+  const list = listCity.filter((item) => {
+    const exits = cities.find((itemCurrent) => {
+      return itemCurrent.name === item.name;
+    });
+    return !exits;
+  });
+
   return (
     <View style={styles.container}>
       <Header icon={typing ? 'SearchSvg' : 'XSvg'} onPress={onPressIconHeader} invert>
@@ -54,31 +62,13 @@ export default function Search(props: SearchProps) {
           onEndEditing={() => setTyping(false)}
         />
       </Header>
-      <ScrollView
-        style={{ height: '100%', width: '100%', backgroundColor: '#fafafa' }}
-        contentContainerStyle={{ padding: 20 }}
-      >
-        {listCity.length > 0
-          ? listCity
-              .filter((item) => {
-                const exits = cities.find((itemCurrent) => {
-                  return itemCurrent.name === item.name;
-                });
-                return !exits;
-              })
-              .map((item, index) => (
-                <CityCard key={`CityCard${index}`} {...item} onPress={() => onAdd(item)} />
-              ))
-          : !typing && (
-              <>
-                <Text style={styles.textInfo}>Cidades não encontradas{' :('}</Text>
-                <Text style={styles.subTextInfo}>
-                  Tente digitar o nome da cidade e pressione para pesquisar ou voltar ao menu
-                  inicial
-                </Text>
-              </>
-            )}
-      </ScrollView>
+      <CardList
+        list={list}
+        callback={(item, index) => (
+          <CityCard key={`CityCard${index}`} {...item} onPress={() => onAdd(item)} />
+        )}
+        ifEmpty={['cidades não encontradas', 'use a caixa de texto acima para pesquisar']}
+      />
     </View>
   );
 }
