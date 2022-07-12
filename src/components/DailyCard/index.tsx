@@ -4,7 +4,7 @@ import { useState } from 'react';
 import IForecast from '@/types/IForecast';
 import { dayNames, isToday, isTomorrow, makeDate } from '@/utils/date';
 
-interface DailyCardProps extends IForecast {
+export interface DailyCardProps extends IForecast {
   onFavorite?: () => void;
   onDetail?: () => void;
 }

@@ -2,11 +2,11 @@ import styles from './styles';
 import { Pressable, Text, View } from 'react-native';
 import ICityBase from '@/types/ICityBase';
 
-interface CardProps extends ICityBase {
+export interface CityCardProps extends ICityBase {
   onPress?: () => void;
 }
 
-export default function CityCard(props: CardProps) {
+export default function CityCard(props: CityCardProps) {
   return (
     <View style={styles.conainer}>
       <View style={{ justifyContent: 'space-between' }}>

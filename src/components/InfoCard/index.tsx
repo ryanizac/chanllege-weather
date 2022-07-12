@@ -3,7 +3,7 @@ import { FullHeart, HeartSvg } from '@/icons';
 import { Pressable, Text, View } from 'react-native';
 import ICity from '@/types/ICity';
 
-interface InfoCardProps extends ICity {
+export interface InfoCardProps extends ICity {
   onFavorite?: () => void;
   onDetail?: () => void;
 }
