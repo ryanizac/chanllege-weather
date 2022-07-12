@@ -1,6 +1,6 @@
 import styles from './styles';
 import { Keyboard, ScrollView, Text, TextInput, View } from 'react-native';
-import SimpleCard from '@/components/CityCard';
+import CityCard from '@/components/CityCard';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import { useRouter } from '@/lib/Router';
@@ -67,7 +67,7 @@ export default function Search(props: SearchProps) {
                 return !exits;
               })
               .map((item, index) => (
-                <SimpleCard key={`SimpleCard${index}`} {...item} onPress={() => onAdd(item)} />
+                <CityCard key={`CityCard${index}`} {...item} onPress={() => onAdd(item)} />
               ))
           : !typing && (
               <>

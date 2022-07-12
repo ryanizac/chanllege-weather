@@ -6,7 +6,7 @@ interface CardProps extends ICityBase {
   onPress?: () => void;
 }
 
-export default function Card(props: CardProps) {
+export default function CityCard(props: CardProps) {
   return (
     <View style={styles.conainer}>
       <View style={{ justifyContent: 'space-between' }}>
