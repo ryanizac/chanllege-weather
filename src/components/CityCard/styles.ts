@@ -11,9 +11,7 @@ const styles = StyleSheet.create({
     width: '100%',
     minHeight: 80,
     maxHeight: 150,
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     backgroundColor: colors.white,
     marginVertical: 8,
     paddingHorizontal: 20,
@@ -32,7 +30,7 @@ const styles = StyleSheet.create({
   country: {
     color: colors.black,
     fontSize: 24,
-    marginBottom: 32
+    marginBottom: 20
   },
   buttonAddContainer: {
     paddingHorizontal: 8

@@ -27,7 +27,7 @@ export default function DailyCard(props: DailyCardProps) {
   return (
     <Pressable onPress={props.onDetail}>
       <View style={styles.conainer}>
-        <View style={{ justifyContent: 'space-between' }}>
+        <View style={styles.column}>
           <Text style={styles.city}>{getDayName()}</Text>
           <Text style={styles.country}>{getDayAndMonth()}</Text>
           <Text style={styles.climate}>{props.description || 'no description'}</Text>
@@ -37,7 +37,7 @@ export default function DailyCard(props: DailyCardProps) {
               : 'no min or max'}
           </Text>
         </View>
-        <View style={{ height: '100%', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <View style={styles.column}>
           <Text style={styles.temp}>{props.temp ? Math.round(props.temp) : 'no'}º</Text>
         </View>
       </View>

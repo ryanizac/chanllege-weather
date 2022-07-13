@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowOffset: { height: 2, width: 0 }
   },
+  column: {
+    height: '100%',
+    justifyContent: 'space-between'
+  },
   city: {
     color: colors.black,
     fontSize: 32,

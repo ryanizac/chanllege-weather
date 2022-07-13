@@ -12,7 +12,7 @@ export default function InfoCard(props: InfoCardProps) {
   return (
     <Pressable onPress={props.onDetail}>
       <View style={styles.conainer}>
-        <View style={{ justifyContent: 'space-between' }}>
+        <View style={styles.column}>
           <Text style={styles.city}>{props.name}</Text>
           <Text style={styles.country}>{props.country}</Text>
           <Text style={styles.climate}>{props.description || 'no description'}</Text>
@@ -22,7 +22,7 @@ export default function InfoCard(props: InfoCardProps) {
               : 'no min or max'}
           </Text>
         </View>
-        <View style={{ height: '100%', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <View style={styles.column}>
           <Text style={styles.temp}>{props.temp ? Math.round(props.temp) : 'no'}º</Text>
           <Pressable style={styles.favoriteContainer} onPress={props.onFavorite}>
             {props.isFavorite ? (
