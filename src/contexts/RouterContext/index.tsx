@@ -1,13 +1,15 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 interface RouterContextProps {
   path: string;
-  setPath: Dispatch<SetStateAction<string>>;
+  setPath: (path: string) => void;
+  back: () => void;
 }
 
 export const RouterContext = createContext<RouterContextProps>({
   path: '',
-  setPath: () => {}
+  setPath: () => {},
+  back: () => {}
 });
 
 interface RouterProps {
@@ -16,13 +18,34 @@ interface RouterProps {
 }
 
 export function RouterProvider(props: RouterProps) {
-  const [path, setPath] = useState(props.default);
+  const [{ path, ...router }, setRouter] = useState({
+    path: props.default,
+    history: [props.default]
+  });
+
+  const setPath = (path: string) => {
+    setRouter((prev) => {
+      const newPath = path;
+      const newHistory = [...prev.history, newPath];
+      return { path: newPath, history: newHistory };
+    });
+  };
+
+  const back = () => {
+    setRouter((prev) => {
+      const lenght = prev.history.length - 2;
+      const newPath = lenght > -1 ? prev.history[lenght] : props.default;
+      const newHistory = [...prev.history, newPath];
+      return { path: newPath, history: newHistory };
+    });
+  };
 
   return (
     <RouterContext.Provider
       value={{
         path,
-        setPath
+        setPath,
+        back
       }}
     >
       {props.children}
