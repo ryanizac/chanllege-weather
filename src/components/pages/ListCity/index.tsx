@@ -1,10 +1,11 @@
 import styles from './styles';
-import Header from '@/components/Header';
 import InfoCard from '@/components/InfoCard';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useRouter } from '@/lib/Router';
 import { useCityContext } from '@/contexts/CityContext';
 import { CardList } from '@/components/ui/CardList';
+import { Header, TitleHeader } from '@/components/ui/Header';
+import { SvgButton } from '@/components/ui/SvgButton';
 
 interface ListCityProps {}
 
@@ -21,8 +22,9 @@ export default function ListCity(props: ListCityProps) {
 
   return (
     <View style={styles.container}>
-      <Header icon="SearchSvg" onPress={() => router.setPath('/search')}>
-        <Text style={styles.titleHeader}>Cidades</Text>
+      <Header>
+        <TitleHeader>Cidades</TitleHeader>
+        <SvgButton svg="SearchSvg" onPress={() => router.setPath('/search')} />
       </Header>
       <CardList
         list={list}
