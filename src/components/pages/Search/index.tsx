@@ -1,12 +1,14 @@
 import styles from './styles';
-import { Keyboard, ScrollView, Text, TextInput, View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import CityCard from '@/components/CityCard';
-import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import { useRouter } from '@/lib/Router';
 import { useCityContext } from '@/contexts/CityContext';
 import ICityBase from '@/types/ICityBase';
 import { CardList } from '@/components/ui/CardList';
+import { InputSearch } from '@/components/ui/InputSearch';
+import { Header } from '@/components/ui/Header';
+import { SvgButton } from '@/components/ui/SvgButton';
 
 interface SearchProps {}
 
@@ -48,16 +50,14 @@ export default function Search(props: SearchProps) {
 
   return (
     <View style={styles.container}>
-      <Header icon={typing ? 'SearchSvg' : 'XSvg'} onPress={onPressIconHeader} invert>
-        <TextInput
-          placeholder="digite..."
-          placeholderTextColor="rgba(255,255,255,0.6)"
-          style={styles.inputHeader}
+      <Header>
+        <SvgButton svg={typing ? 'SearchSvg' : 'XSvg'} onPress={onPressIconHeader} />
+        <InputSearch
           value={input}
+          setValue={setInput}
           autoFocus={typing}
           onPressIn={() => setListCity([])}
           onSubmitEditing={onPressIconHeader}
-          onChangeText={(e) => setInput(e)}
           onFocus={() => setTyping(true)}
           onEndEditing={() => setTyping(false)}
         />
