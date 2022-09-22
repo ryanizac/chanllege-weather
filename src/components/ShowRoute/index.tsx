@@ -1,13 +1,18 @@
 import { useRouterContext } from '@/contexts/RouterContext';
-import { ReactNode } from 'react';
+import { FunctionComponent } from 'react';
 
-interface ShowRouteProps {
+interface ShowRouteProps<T extends unknown> {
   path: string;
-  component: ReactNode;
+  componentProps?: T;
+  Component: FunctionComponent<T>;
 }
 
-export default function ShowRoute(props: ShowRouteProps) {
+export default function ShowRoute<T extends object>({
+  Component,
+  componentProps,
+  ...props
+}: ShowRouteProps<T>) {
   const router = useRouterContext();
 
-  return <>{router.path === props.path && props.component}</>;
+  return <>{router.path === props.path && <Component {...(componentProps as T)} />}</>;
 }
