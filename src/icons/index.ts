@@ -1,8 +1,6 @@
-import BackSvg from '@assets/icon/back.svg';
-import HeartSvg from '@assets/icon/heart.svg';
-import MenuSvg from '@assets/icon/menu.svg';
-import XSvg from '@assets/icon/x.svg';
-import SearchSvg from '@assets/icon/search.svg';
-import FullHeart from '@assets/icon/fullheart.svg';
+export * from './all';
+import * as icons from './all';
 
-export { BackSvg, HeartSvg, MenuSvg, XSvg, SearchSvg, FullHeart };
+export { icons };
+
+export type IconType = keyof typeof icons;
