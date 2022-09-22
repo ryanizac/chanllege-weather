@@ -1,3 +1,4 @@
+import '@/confg/init';
 import Detail from '@/components/pages/Detail';
 import ListCity from '@/components/pages/ListCity';
 import Search from '@/components/pages/Search';

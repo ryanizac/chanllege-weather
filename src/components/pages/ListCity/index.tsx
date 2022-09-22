@@ -17,17 +17,7 @@ export default function ListCity(props: ListCityProps) {
     router.setPath('/detail');
   }
 
-  const list = cities
-    .sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
-      return 0;
-    })
-    .sort((a, b) => {
-      if (a.isFavorite && !b.isFavorite) return -1;
-      if (!a.isFavorite && b.isFavorite) return 1;
-      return 0;
-    });
+  const list = cities.sortBySize('name').sortByBoolean('isFavorite');
 
   return (
     <View style={styles.container}>
