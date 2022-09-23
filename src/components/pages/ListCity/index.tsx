@@ -6,6 +6,7 @@ import { useCityContext } from '@/contexts/CityContext';
 import { CardList } from '@/components/ui/CardList';
 import { Header, TitleHeader } from '@/components/ui/Header';
 import { SvgButton } from '@/components/ui/SvgButton';
+import { ListContainer } from '@/components/ui/ListContainer';
 
 interface ListCityProps {}
 
@@ -18,7 +19,7 @@ export default function ListCity(props: ListCityProps) {
     router.setPath('/detail');
   }
 
-  const list = cities.sortBySize('name').sortByBoolean('isFavorite');
+  const sortedListCities = cities.sortBySize('name').sortByBoolean('isFavorite');
 
   return (
     <View style={styles.container}>
@@ -26,17 +27,15 @@ export default function ListCity(props: ListCityProps) {
         <TitleHeader>Cidades</TitleHeader>
         <SvgButton svg="SearchSvg" onPress={() => router.setPath('/search')} />
       </Header>
-      <CardList
-        list={list}
-        callback={(item, index) => (
-          <InfoCard
-            key={`InfoCard${index}`}
-            {...item}
-            onFavorite={() => toggleFavorite(item.id)}
-            onDetail={() => onDetail(item.id)}
-          />
-        )}
-        ifEmpty={[
+      <ListContainer
+        list={sortedListCities}
+        Child={InfoCard}
+        render={(item) => ({
+          ...item,
+          onFavorite: () => toggleFavorite(item.id),
+          onDetail: () => onDetail(item.id)
+        })}
+        emptyMessages={[
           'Parece que você ainda não adicionou cidades',
           'Tente adicionar uma cidade usando o botão de busca'
         ]}
