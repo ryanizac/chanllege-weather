@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from '@/lib/Router';
 import { useCityContext } from '@/contexts/CityContext';
 import ICityBase from '@/types/ICityBase';
-import { CardList } from '@/components/ui/CardList';
 import { InputSearch } from '@/components/ui/InputSearch';
 import { Header } from '@/components/ui/Header';
 import { SvgButton } from '@/components/ui/SvgButton';
+import { ListContainer } from '@/components/ui/ListContainer';
 
 interface SearchProps {}
 
@@ -62,12 +62,14 @@ export default function Search(props: SearchProps) {
           onEndEditing={() => setTyping(false)}
         />
       </Header>
-      <CardList
+      <ListContainer
         list={list}
-        callback={(item, index) => (
-          <CityCard key={`CityCard${index}`} {...item} onPress={() => onAdd(item)} />
-        )}
-        ifEmpty={['cidades não encontradas', 'use a caixa de texto acima para pesquisar']}
+        Child={CityCard}
+        render={(item) => ({
+          ...item,
+          onPress: () => onAdd(item)
+        })}
+        emptyMessages={['cidades não encontradas', 'use a caixa de texto acima para pesquisar']}
       />
     </View>
   );

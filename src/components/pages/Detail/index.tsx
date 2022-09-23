@@ -1,12 +1,12 @@
 import styles from './styles';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useRouter } from '@/lib/Router';
 import { useCityContext } from '@/contexts/CityContext';
 import DailyCard from '@/components/DailyCard';
 import ErrorComponent from '../Error';
-import { CardList } from '@/components/ui/CardList';
 import { Header, TitleHeader } from '@/components/ui/Header';
 import { SvgButton } from '@/components/ui/SvgButton';
+import { ListContainer } from '@/components/ui/ListContainer';
 
 interface DetailProps {}
 
@@ -24,9 +24,10 @@ export default function Detail(props: DetailProps) {
         <SvgButton svg="BackSvg" marginRight={8} onPress={onBack} />
         <TitleHeader>{selected.name}</TitleHeader>
       </Header>
-      <CardList
+      <ListContainer
         list={(selected.daily || []).slice(0, 7)}
-        callback={(item, index) => <DailyCard key={`Text${index}`} {...item} />}
+        Child={DailyCard}
+        render={(item) => item}
       />
     </View>
   );
