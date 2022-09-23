@@ -12,10 +12,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       <CityContextProvider>
-        <Router default="/listcities">
+        <Router default={{ path: '/listcities' }}>
           <Route path="/listcities" Component={ListCity} />
           <Route path="/search" Component={Search} />
-          <Route path="/detail" Component={Detail} />
+          <Route path="/detail/:id" Component={Detail} />
         </Router>
       </CityContextProvider>
       <StatusBar style="light" />

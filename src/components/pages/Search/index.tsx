@@ -21,7 +21,7 @@ export default function Search(props: SearchProps) {
 
   async function onAdd(item: ICityBase) {
     await add(item);
-    router.setPath('/listcities');
+    router.to('/listcities');
   }
 
   function onPressIconHeader() {
@@ -31,7 +31,7 @@ export default function Search(props: SearchProps) {
       Keyboard.dismiss();
       input.length >= 3 && search(input).then((value) => setListCity(value));
     } // back, when not typing and after pressing the button
-    else router.setPath('/listcities');
+    else router.to('/listcities');
   }
 
   useEffect(() => {

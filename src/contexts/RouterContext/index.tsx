@@ -1,50 +1,74 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { RouteParameters } from '@/types/RouteParameters';
+import { useEffect, createContext, ReactNode, useContext, useState } from 'react';
+
+type Route<T extends string> = {
+  path: T;
+  params: RouteParameters<T>;
+};
+
+type PartialRoute<T extends string> = {
+  path: T;
+  params?: RouteParameters<T>;
+};
+
+type RouterState<T extends string> = {
+  route: Route<T>;
+  history: Array<Route<any>>;
+};
 
 interface RouterContextProps {
-  path: string;
-  setPath: (path: string) => void;
+  route: Route<any>;
+  to: <P extends string>(path: P, params?: RouteParameters<P>) => void;
   back: () => void;
 }
 
 export const RouterContext = createContext<RouterContextProps>({
-  path: '',
-  setPath: () => {},
+  route: {
+    path: '',
+    params: {}
+  },
+  to: () => {},
   back: () => {}
 });
 
 interface RouterProps {
-  default: string;
+  default: PartialRoute<any>;
   children?: ReactNode | ReactNode[];
 }
 
 export function RouterProvider(props: RouterProps) {
-  const [{ path, ...router }, setRouter] = useState({
-    path: props.default,
-    history: [props.default]
+  const defaultRoute: Route<any> = {
+    path: props.default.path,
+    params: { ...props.default.params }
+  };
+
+  const [{ route, history: _history }, setRouter] = useState<RouterState<any>>({
+    route: defaultRoute,
+    history: [defaultRoute]
   });
 
-  const setPath = (path: string) => {
+  const to = <P extends string>(path: P, params: RouteParameters<P> = {} as any) => {
     setRouter((prev) => {
-      const newPath = path;
-      const newHistory = [...prev.history, newPath];
-      return { path: newPath, history: newHistory };
+      const newRoute: Route<any> = { path, params: { ...params } };
+      const newHistory: Array<Route<any>> = [...prev.history, newRoute];
+      return { ...prev, route: newRoute, history: newHistory };
     });
   };
 
   const back = () => {
     setRouter((prev) => {
       const lenght = prev.history.length - 2;
-      const newPath = lenght > -1 ? prev.history[lenght] : props.default;
-      const newHistory = [...prev.history, newPath];
-      return { path: newPath, history: newHistory };
+      const newRoute = lenght > -1 ? prev.history[lenght] : defaultRoute;
+      const newHistory = [...prev.history, newRoute];
+      return { ...prev, route: newRoute, history: newHistory };
     });
   };
 
   return (
     <RouterContext.Provider
       value={{
-        path,
-        setPath,
+        route,
+        to,
         back
       }}
     >

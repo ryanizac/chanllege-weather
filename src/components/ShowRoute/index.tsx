@@ -12,7 +12,7 @@ export default function ShowRoute<T extends object>({
   componentProps,
   ...props
 }: ShowRouteProps<T>) {
-  const router = useRouterContext();
+  const { route } = useRouterContext();
 
-  return <>{router.path === props.path && <Component {...(componentProps as T)} />}</>;
+  return <>{route.path === props.path && <Component {...(componentProps as T)} />}</>;
 }

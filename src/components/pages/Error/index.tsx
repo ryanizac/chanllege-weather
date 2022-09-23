@@ -18,7 +18,7 @@ export default function Error(props: ErrorProps) {
   }, []);
 
   useEffect(() => {
-    counter === 0 && router.setPath('/listcities');
+    counter === 0 && router.to('/listcities');
   }, [counter]);
 
   return (

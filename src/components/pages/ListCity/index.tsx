@@ -3,7 +3,6 @@ import InfoCard from '@/components/InfoCard';
 import { View } from 'react-native';
 import { useRouter } from '@/lib/Router';
 import { useCityContext } from '@/contexts/CityContext';
-import { CardList } from '@/components/ui/CardList';
 import { Header, TitleHeader } from '@/components/ui/Header';
 import { SvgButton } from '@/components/ui/SvgButton';
 import { ListContainer } from '@/components/ui/ListContainer';
@@ -12,12 +11,7 @@ interface ListCityProps {}
 
 export default function ListCity(props: ListCityProps) {
   const router = useRouter();
-  const { cities, toggleFavorite, chooseSelected } = useCityContext();
-
-  function onDetail(id: string) {
-    chooseSelected(id);
-    router.setPath('/detail');
-  }
+  const { cities, toggleFavorite } = useCityContext();
 
   const sortedListCities = cities.sortBySize('name').sortByBoolean('isFavorite');
 
@@ -25,7 +19,7 @@ export default function ListCity(props: ListCityProps) {
     <View style={styles.container}>
       <Header>
         <TitleHeader>Cidades</TitleHeader>
-        <SvgButton svg="SearchSvg" onPress={() => router.setPath('/search')} />
+        <SvgButton svg="SearchSvg" onPress={() => router.to('/search')} />
       </Header>
       <ListContainer
         list={sortedListCities}
@@ -33,7 +27,7 @@ export default function ListCity(props: ListCityProps) {
         render={(item) => ({
           ...item,
           onFavorite: () => toggleFavorite(item.id),
-          onDetail: () => onDetail(item.id)
+          onDetail: () => router.to('/detail/:id', { id: item.id })
         })}
         emptyMessages={[
           'Parece que você ainda não adicionou cidades',
